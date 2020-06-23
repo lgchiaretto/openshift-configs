@@ -1,0 +1,25 @@
+apiVersion: config.openshift.io/v1
+kind: OAuth
+metadata:
+    name: cluster
+spec:
+   identityProviders:
+   - name: AD-Chiaretto
+     mappingMethod: claim
+     type: LDAP
+     ldap:
+       attributes:
+         id:
+         - dn
+         email:
+         - userPrincipalName
+         name:
+         - cn
+         preferredUsername:
+         - sAMAccountName
+       bindDN: "CN=Administrator,CN=Users,DC=chiaretto,DC=home"
+       bindPassword:
+         name: ad-chiaretto
+       insecure: true
+       url: "ldap://ad.chiaret.to/cn=users,dc=chiaretto,dc=home?sAMAccountName"
+

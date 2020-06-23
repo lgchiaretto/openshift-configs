@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: image-registry
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+  - ReadWriteMany
+  nfs:
+    path: /nfsshare/ultra-image-registry
+    server: 192.168.1.200
+  storageClassName: non-dynamic
