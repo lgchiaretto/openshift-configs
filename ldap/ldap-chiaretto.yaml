@@ -21,5 +21,5 @@ spec:
        bindPassword:
          name: ad-chiaretto
        insecure: true
-       url: "ldap://ad.chiaret.to/cn=users,dc=chiaretto,dc=home?sAMAccountName"
+       url: "ldap://ad.chiaret.to/cn=users,dc=chiaretto,dc=home?sAMAccountName?sub?(&(objectclass=*)(|(memberOf=cn=OCP Admins,cn=users,dc=chiaretto,dc=home)(memberOf=cn=OCP Users,cn=users,dc=chiaretto,dc=home)))"
 

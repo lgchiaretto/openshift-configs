@@ -86,7 +86,7 @@ metadata:
   labels:
     app: cronjob-ldap-group-sync
 spec:
-  schedule: "*/5 * * * *"
+  schedule: "*/1 * * * *"
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 5
   failedJobsHistoryLimit: 5
