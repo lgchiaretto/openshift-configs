@@ -31,7 +31,7 @@ NFS_MOUNT_DIR=$(mktemp -d -t backup-XXXXXXXXXX)
 ETCD_FINAL_BCK_DIR="${NFS_SERVER}:${NFS_DIR}"
 
 log(){
-  date "+%F %T: ${@}"
+  /usr/bin/date "+%F %T: ${@}" >> /var/log/backup-master.log
 }
 
 die(){
@@ -50,7 +50,7 @@ die(){
 
 backup_config() {
   log "Backing up ETCD config."
-  cp -a "${ETCD_CONFIG_DIR}" "/tmp/${ETCD_CONFIG_BCK_DIR}"
+  /usr/bin/cp -a "${ETCD_CONFIG_DIR}" "/tmp/${ETCD_CONFIG_BCK_DIR}"
 }
 
 backup_data() {
@@ -78,14 +78,14 @@ backup_data() {
     && die "/var/lib/etcd/snapshot.db is not a valid etcd backup. Please check the status of your etcd cluster" 1
 
   # Move the snapshot to the temp bck dir.
-  mv /var/lib/etcd/snapshot.db /tmp/${ETCD_DATA_BCK_DIR}/snapshot.db
+  /usr/bin/mv /var/lib/etcd/snapshot.db /tmp/${ETCD_DATA_BCK_DIR}/snapshot.db
 }
 
 mount_nfs(){
   log "Creating tmp dir to mount NFS"
   log "$NFS_MOUNT_DIR has been created" 
   log "Mounting NFS server on $NFS_MOUNT_DIR"
-  mount -t nfs $NFS_SERVER:$NFS_DIR $NFS_MOUNT_DIR
+  /usr/bin/mount -t nfs $NFS_SERVER:$NFS_DIR $NFS_MOUNT_DIR
 # TODO: Fix this check 
 #  [ "$?" -ne 0 ] \
 #    && die "Error when mounting NFS server" 1
@@ -93,16 +93,16 @@ mount_nfs(){
 
 umount_nfs(){
   log "Umounting NFS server on $NFS_MOUNT_DIR"
-  umount $NFS_MOUNT_DIR
+  /usr/bin/umount $NFS_MOUNT_DIR
   [ "$?" -ne 0 ] \
     && die "Error when umounting NFS server" 1
   log "Removing $NFS_MOUNT_DIR"
-  rmdir $NFS_MOUNT_DIR
+  /usr/bin/rmdir $NFS_MOUNT_DIR
 }
 
 backup(){
   log "Backing up ETCD."
-  mkdir -p /tmp/${ETCD_DATA_BCK_DIR}/
+  /usr/bin/mkdir -p /tmp/${ETCD_DATA_BCK_DIR}/
 
   backup_config
   backup_data
@@ -113,14 +113,14 @@ backup(){
   log "Check your backup file on: ${ETCD_FINAL_BCK_DIR}/${ETCD_FINAL_BCK_FILE}"
 
   log "Deleting temporary files"
-  rm -rf "/tmp/${ETCD_CONFIG_BCK_DIR}" "/tmp/${ETCD_DATA_BCK_DIR}"
+  /usr/bin/rm -rf "/tmp/${ETCD_CONFIG_BCK_DIR}" "/tmp/${ETCD_DATA_BCK_DIR}"
 }
 
 # Keep the last #RETENTION_DAYS backup files
 purge_old_backups(){
   log "Deleting old backup files...Keeping the last ${RETENTION_DAYS} days"
-  find "${NFS_MOUNT_DIR}"/etcd_bck.${HOSTNAME}* -type f -mtime +"${RETENTION_DAYS}"
-  find "${NFS_MOUNT_DIR}"/etcd_bck.${HOSTNAME}* -type f -mtime +"${RETENTION_DAYS}" -delete
+  /usr/bin/find "${NFS_MOUNT_DIR}"/etcd_bck.${HOSTNAME}* -type f -mtime +"${RETENTION_DAYS}"
+  /usr/bin/find "${NFS_MOUNT_DIR}"/etcd_bck.${HOSTNAME}* -type f -mtime +"${RETENTION_DAYS}" -delete
 }
 
 mount_nfs
@@ -129,3 +129,4 @@ purge_old_backups
 umount_nfs
 
 exit 0
+
