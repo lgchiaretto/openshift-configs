@@ -23,9 +23,11 @@ MASTER_EXEC="/usr/local/bin/master-exec"
 ETCD_POD_MANIFEST="/etc/origin/node/pods/etcd.yaml"
 ETCD_DATA_BCK_DIR="etcd_data_bck.${TS}"
 ETCD_CONFIG_DIR="/etc/etcd"
+MASTER_CONFIG_DIR="/etc/origin"
 ETCD_CONFIG_BCK_DIR="etcd_config_bck.${TS}"
-ETCD_FINAL_BCK_FILE="etcd_bck.${HOSTNAME}.${TS}.tar.gz"
-NFS_SERVER="nfs.chiaret.to"
+MASTER_CONFIG_BCK_DIR="master_config_bck.${TS}"
+FINAL_BCK_FILE="etcd_master_bck.${HOSTNAME}.${TS}.tar.gz"
+NFS_SERVER="nfs.openshift.chiaret.to"
 NFS_DIR="/nfsshare/"
 NFS_MOUNT_DIR=$(mktemp -d -t backup-XXXXXXXXXX)
 ETCD_FINAL_BCK_DIR="${NFS_SERVER}:${NFS_DIR}"
@@ -51,6 +53,8 @@ die(){
 backup_config() {
   log "Backing up ETCD config."
   /usr/bin/cp -a "${ETCD_CONFIG_DIR}" "/tmp/${ETCD_CONFIG_BCK_DIR}"
+  log "Backing up master $(hostname -s) config."
+  /usr/bin/cp -a "${MASTER_CONFIG_DIR}" "/tmp/${MASTER_CONFIG_BCK_DIR}"
 }
 
 backup_data() {
@@ -101,19 +105,19 @@ umount_nfs(){
 }
 
 backup(){
-  log "Backing up ETCD."
+  log "Creating ETCD backup dir"
   /usr/bin/mkdir -p /tmp/${ETCD_DATA_BCK_DIR}/
 
   backup_config
   backup_data
 
-  log "Creating tar.gz file"
-  tar cfz "${NFS_MOUNT_DIR}/${ETCD_FINAL_BCK_FILE}" --directory /tmp "${ETCD_CONFIG_BCK_DIR}" "${ETCD_DATA_BCK_DIR}"
+  log "Creating final tar.gz file"
+  tar cfz "${NFS_MOUNT_DIR}/${FINAL_BCK_FILE}" --directory /tmp "${ETCD_CONFIG_BCK_DIR}" "${ETCD_DATA_BCK_DIR}" "${MASTER_CONFIG_BCK_DIR}"
 
-  log "Check your backup file on: ${ETCD_FINAL_BCK_DIR}/${ETCD_FINAL_BCK_FILE}"
+  log "Check your backup file on: ${ETCD_FINAL_BCK_DIR}/${FINAL_BCK_FILE}"
 
   log "Deleting temporary files"
-  /usr/bin/rm -rf "/tmp/${ETCD_CONFIG_BCK_DIR}" "/tmp/${ETCD_DATA_BCK_DIR}"
+  /usr/bin/rm -rf "/tmp/${ETCD_CONFIG_BCK_DIR}" "/tmp/${ETCD_DATA_BCK_DIR}" "${MASTER_CONFIG_BCK_DIR}"
 }
 
 # Keep the last #RETENTION_DAYS backup files
