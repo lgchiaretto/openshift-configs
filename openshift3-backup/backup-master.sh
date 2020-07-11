@@ -123,8 +123,8 @@ backup(){
 # Keep the last #RETENTION_DAYS backup files
 purge_old_backups(){
   log "Deleting old backup files...Keeping the last ${RETENTION_DAYS} days"
-  /usr/bin/find "${NFS_MOUNT_DIR}"/etcd_bck.${HOSTNAME}* -type f -mtime +"${RETENTION_DAYS}"
-  /usr/bin/find "${NFS_MOUNT_DIR}"/etcd_bck.${HOSTNAME}* -type f -mtime +"${RETENTION_DAYS}" -delete
+  /usr/bin/find "${NFS_MOUNT_DIR}"/etcd_master_bck.${HOSTNAME}* -type f -mtime +"${RETENTION_DAYS}"
+  /usr/bin/find "${NFS_MOUNT_DIR}"/etcd_master_bck.${HOSTNAME}* -type f -mtime +"${RETENTION_DAYS}" -delete
 }
 
 mount_nfs
