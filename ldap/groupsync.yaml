@@ -2,8 +2,7 @@ kind: LDAPSyncConfig
 apiVersion: v1
 url: ldap://ad.chiaret.to:389
 bindDN: CN=Administrator,CN=Users,DC=chiaretto,DC=home
-bindPassword: 
-  file: /root/bindpassword
+bindPassword: "redhat@123"
 insecure: true
 activeDirectory:
     usersQuery:
