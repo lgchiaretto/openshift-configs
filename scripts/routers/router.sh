@@ -5,7 +5,7 @@
 all_infra_nodes=$(oc get nodes --no-headers -l node-role.kubernetes.io/infra=true | wc -l)
 replicas=$(($all_infra_nodes - 1))
 now=$(date +'%d%m%y_%H%M%S')
-logfile="/var/log/router.sh-$now"
+logfile="router.sh-$now"
 
 err() {
     echo; echo;
