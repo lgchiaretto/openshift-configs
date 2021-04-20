@@ -2,7 +2,7 @@
 
 ### Apply
 
-oc apply -f openshift4-backup.yaml
+`oc apply -f openshift4-backup.yaml`
 
 ### Privileged permissions
 
