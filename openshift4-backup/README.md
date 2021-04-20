@@ -6,9 +6,9 @@ Cronjob **openshift-backup** resource  will be created and scheduled to run at 1
 
 ### Prerequesites
 
-Create a new project called openshift-etcd-backup
+Create a new project called ocp-backup-etcd
 
-`oc new-project openshift-etcd-backup --description "Openshift Backup Automation Tool"` 
+`oc new-project ocp-backup-etcd --description "Openshift Backup Automation Tool"` 
 
 ### Apply yaml to create Openshift resources
 
