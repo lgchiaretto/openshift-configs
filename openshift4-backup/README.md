@@ -1,6 +1,6 @@
 # Openshift 4 Backup Automation
 
-### Apply
+### Apply yaml to create Openshift resources
 
 `oc apply -f openshift4-backup.yaml`
 
