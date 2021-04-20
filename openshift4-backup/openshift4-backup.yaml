@@ -2,7 +2,7 @@ kind: ServiceAccount
 apiVersion: v1
 metadata:
   name: openshift-backup
-  namespace: openshift-etcd-backup
+  namespace: ocp-backup-etcd
   labels:
     app: openshift-backup
 ---
@@ -30,7 +30,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: openshift-backup
-    namespace: openshift-etcd-backup
+    namespace: ocp-backup-etcd
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -40,7 +40,7 @@ kind: CronJob
 apiVersion: batch/v1beta1
 metadata:
   name: openshift-backup
-  namespace: openshift-etcd-backup
+  namespace: ocp-backup-etcd
   labels:
     app: openshift-backup
 spec:
@@ -61,7 +61,7 @@ spec:
         spec:
           containers:
             - name: backup
-              image: "openshift/origin-cli:latest"
+              image: "openshift4/ose-cli:latest"
               command:
                 - "/bin/bash"
                 - "-c"
