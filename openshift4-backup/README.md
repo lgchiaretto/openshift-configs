@@ -1,4 +1,4 @@
-# Openshift 4 Backup Automation
+# Openshift 4 Backup Automation Tool
 
 This tool was built to automate the steps to create an Openshift 4 backup described on https://docs.openshift.com/container-platform/4.7/backup_and_restore/backing-up-etcd.html#backup-etcd
 
