@@ -1,5 +1,11 @@
 # Openshift 4 Backup Automation
 
+### Prerequesites
+
+Create a new project called openshift-etcd-backup
+
+`oc new-project openshift-etcd-backup --description "Openshift Backup Automation Tool"` 
+
 ### Apply yaml to create Openshift resources
 
 `oc apply -f openshift4-backup.yaml`
