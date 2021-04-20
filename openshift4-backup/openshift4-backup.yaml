@@ -11,18 +11,15 @@ kind: ClusterRole
 metadata:
   name: cluster-etcd-backup
 rules:
-- apiGroups: ["", "metrics.k8s.io", "extensions", "apps"] 
+- apiGroups: [""] 
   resources: 
-     - "events" 
      - "nodes" 
-     - "deployments" 
-     - "replicasets" 
   verbs: ["get", "list"]
 - apiGroups: [""] 
   resources: 
      - "pods" 
      - "pods/log" 
-  verbs: ["get", "list", "create", "delete", "watch"]
+  verbs: ["get", "list", "create", "delete"]
 ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
