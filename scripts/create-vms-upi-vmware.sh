@@ -157,6 +157,19 @@ govc vm.change -vm "${VM_NAME}" -e "guestinfo.ignition.config.data.encoding=base
 govc vm.change -vm="${VM_NAME}" -e="disk.enableUUID=1"
 govc vm.network.change --vm "${VM_NAME}" -net.address 00:50:56:b6:89:db  -net="VM Network" ethernet-0
 
+VM_NAME=${CLUSTER_ID}-master-3
+log "Creating ${VM_NAME} vm"
+CONFIG_B64=$(cat master.64)
+govc vm.clone -vm=$TEMPLATE -ds=NFS -folder=${VMWARE_FOLDER} ${VM_NAME}
+govc vm.power -off -force ${VM_NAME}
+govc vm.change -vm ${VM_NAME} -cpu-hot-add-enabled -memory-hot-add-enabled
+govc vm.change -vm ${VM_NAME} -c=8 -m=10240
+govc vm.change -vm "${VM_NAME}" -e cpuid.coresPerSocket=8
+govc vm.change -vm "${VM_NAME}" -e "guestinfo.ignition.config.data=${CONFIG_B64}"
+govc vm.change -vm "${VM_NAME}" -e "guestinfo.ignition.config.data.encoding=base64"
+govc vm.change -vm="${VM_NAME}" -e="disk.enableUUID=1"
+govc vm.network.change --vm "${VM_NAME}" -net.address 00:50:56:b6:51:e2  -net="VM Network" ethernet-0
+
 # VM_NAME=${CLUSTER_ID}-worker-1
 # log "Creating ${VM_NAME} vm"
 # CONFIG_B64=$(cat worker.64)
