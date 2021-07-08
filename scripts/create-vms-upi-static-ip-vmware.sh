@@ -37,6 +37,7 @@ curl -s -O https://mirror.openshift.com/pub/openshift-v4/clients/ocp/${OPENSHIFT
 log "Tar on openshift-install"
 tar xzvf openshift-install-linux.tar.gz
 
+#TODO: Add some values on install-config ad variable
 log "Creating install-config.yaml"
 cat <<'EOF' >> install-config.yaml
 apiVersion: v1
@@ -111,6 +112,7 @@ for i in bootstrap master worker;  do
   base64 -w0 < $i.ign > $i.64;  
  done
 
+#TODO: Add some variables here
 log "Creating append.ign"
 cat <<'EOF' >> append.ign
 {
