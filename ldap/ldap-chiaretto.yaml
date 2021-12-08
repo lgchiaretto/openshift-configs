@@ -4,6 +4,12 @@ metadata:
     name: cluster
 spec:
    identityProviders:
+   - name: HTPasswd
+     mappingMethod: claim 
+     type: HTPasswd
+     htpasswd:
+       fileData:
+         name: htpass-secret
    - name: AD-Chiaretto
      mappingMethod: claim
      type: LDAP
@@ -21,5 +27,5 @@ spec:
        bindPassword:
          name: ad-chiaretto
        insecure: true
-       url: "ldap://chiaretto-ad01.chiaret.to/cn=users,dc=chiaretto,dc=home?sAMAccountName?sub?(&(objectclass=*)(|(memberOf=cn=OCP Admins,cn=users,dc=chiaretto,dc=home)(memberOf=cn=OCP Users,cn=users,dc=chiaretto,dc=home)))"
+       url: "ldap://192.168.0.254/cn=users,dc=chiaretto,dc=home?sAMAccountName?sub?(&(objectclass=*)(|(memberOf=cn=OCP Admins,cn=users,dc=chiaretto,dc=home)(memberOf=cn=OCP Users,cn=users,dc=chiaretto,dc=home)))"
 
