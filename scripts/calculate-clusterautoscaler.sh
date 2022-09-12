@@ -10,7 +10,7 @@ NODES_LIST=$($OC_CMD get nodes -o 'jsonpath={range .items[*]}{.metadata.name}{"\
 
 for node in $NODES_LIST;
 do
-  echo $node
+  $ECHO_CMD $node
   node_memory=$($OC_CMD get nodes $node -o 'jsonpath={.status.capacity.memory}' | $AWK_CMD '{$0=$0/(1024^2); print $1,"GB";}')
   node_cpu=$($OC_CMD get nodes $node -o 'jsonpath={.status.capacity.cpu}')
   $ECHO_CMD "Memory: ${node_memory//Ki}"
