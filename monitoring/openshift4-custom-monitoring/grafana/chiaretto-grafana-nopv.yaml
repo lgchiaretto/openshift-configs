@@ -20,4 +20,4 @@ spec:
       - grafana
   ingress:
     enabled: true
-    hostname: "grafana.apps.ocp4a.chiaret.to"
+    hostname: "grafana.apps.ipi.chiaret.to"

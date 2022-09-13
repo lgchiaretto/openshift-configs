@@ -2,6 +2,7 @@ apiVersion: integreatly.org/v1alpha1
 kind: Grafana
 metadata:
   name: chiaretto-grafana
+  namespace: chiaretto-monitoring
 spec:
   config:
     auth.ldap:
@@ -23,5 +24,5 @@ spec:
     hostname: "grafana.apps.ocp4a.chiaret.to"
   dataStorage:
     accessModes:
-      - ReadWriteMany
+      - ReadWriteOnce
     size: 10Gi
