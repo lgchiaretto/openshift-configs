@@ -31,7 +31,7 @@ NODES_LIST=$($OC_CMD --request-timeout="$DEFAULT_TIMEOUT" get nodes -o 'jsonpath
 NUMBER_OF_NODES=0
 for node in $NODES_LIST;
 do
-  ((NUMBER_OF_NODES++))
+  NUMBER_OF_NODES=$((NUMBER_OF_NODES+1))
   log   $node
   node_memory=$($OC_CMD --request-timeout="$DEFAULT_TIMEOUT" --request-timeout="$DEFAULT_TIMEOUT" get nodes $node -o 'jsonpath={.status.capacity.memory}' | $AWK_CMD '{$0=$0/(1024^2); print $1,"GB";}')
   node_cpu=$($OC_CMD --request-timeout="$DEFAULT_TIMEOUT" get nodes $node -o 'jsonpath={.status.capacity.cpu}')
@@ -52,15 +52,14 @@ log   "--------------------------------"
 
 # Checking machineSet sizing
 MACHINESETS=$($OC_CMD get -o 'jsonpath={range .items[*]}{.metadata.name}{"\n"}{end}' --no-headers  --request-timeout=3 machineset -n openshift-machine-api)
-if [ -z "$MACHINESETS" ]; then
-  err "There's no MachineSet created on cluster and it's prereq to configure ClusterAutoScaler"
-fi
-
 log   "MachineAutoscaler configs"
-
 for machineset in $MACHINESETS; 
 do
-  ms_current_size=$($OC_CMD get -o 'jsonpath={.status.replicas}' --no-headers  --request-timeout=3 machineset -n openshift-machine-api $machineset)
-  log "Machineset $machineset has found and the MaxReplicas on MachineAutoscaler for MachineSet $machineset must be higher than: $ms_current_size"
+  if [[ "$machineset" == *"No resources found in"* ]]; then
+    err "There's no MachineSet created on cluster and it's prereq to configure ClusterAutoScaler"
+  else
+    ms_current_size=$($OC_CMD get -o 'jsonpath={.status.replicas}' --no-headers  --request-timeout=3 machineset -n openshift-machine-api $machineset)
+    log "Machineset $machineset has found and the MaxReplicas on MachineAutoscaler for MachineSet $machineset must be higher than \"$ms_current_size\""
+  fi
 done
 log   "--------------------------------"
