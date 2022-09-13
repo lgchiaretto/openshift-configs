@@ -2,7 +2,7 @@ kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1 
 metadata:
   name: grafana-operator-view
-  namespace: chiaretto-monitoring
+  namespace: rdsl-monitoramento
   labels:
     rbac.authorization.k8s.io/aggregate-to-view: "true" 
     rbac.authorization.k8s.io/aggregate-to-cluster-reader: "true" 
@@ -30,7 +30,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: grafana-operator
-  namespace: chiaretto-monitoring
+  namespace: rdsl-monitoramento
 roleRef:
   name: grafana-operator-view
   kind: ClusterRole
@@ -38,4 +38,4 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: grafana-operator
-    namespace: chiaretto-monitoring
+    namespace: rdsl-monitoramento

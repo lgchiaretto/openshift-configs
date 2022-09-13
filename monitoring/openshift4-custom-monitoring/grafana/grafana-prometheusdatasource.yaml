@@ -2,7 +2,6 @@ apiVersion: integreatly.org/v1alpha1
 kind: GrafanaDataSource
 metadata:
   name: prometheus-user-workload
-  namespace: chiaretto-monitoring
 spec:
   datasources:
     - access: proxy
@@ -14,7 +13,7 @@ spec:
         tlsSkipVerify: true
       name: Prometheus
       secureJsonData:
-        httpHeaderValue1: 'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Ijhya0Q2c2lhOHladS1oRnFwVnF2WER2YW1rYzU0dC1CalZ3eFZrTjJzNk0ifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJjaGlhcmV0dG8tbW9uaXRvcmluZyIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJncmFmYW5hLXNlcnZpY2VhY2NvdW50LXRva2VuLWh4cWdwIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImdyYWZhbmEtc2VydmljZWFjY291bnQiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiJmYmJhYTRjNC00Yzg2LTQ3ZDQtYjY3My1jNDljZDg5ZTQ0YzIiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6Y2hpYXJldHRvLW1vbml0b3Jpbmc6Z3JhZmFuYS1zZXJ2aWNlYWNjb3VudCJ9.OnkcCavrkpxXtcD6iz0CoR8N_Spchlh0gum876lXN3JYPpnlBQoP4lFfiYbKKm1BimI3ZDlQ-NtynrUMFVvNOeQZXKTOjcfkRLSQ7Qmv-ZJkqlD_7-yqaCzDVoXjyIxFq0T-W_00kBeZCGxkihRZJc2L8SXJU5E4PdE1-4VOdiF8_TpvMArXzweFP1q09ZOEA5AqNW_0yoSXVZhXcW74DReBFp6jyXHVoOuPMazDbsVH9hb_6Gv0jfEx22qt2Q7vgBfDrvdlF7gDcN_Xk9rhPiksWF0oM3aoHAmyx_Fod7nBU8KsaNaCOem_gwcoMMgICQmU41mlablkOR_kario9Q' 
+        httpHeaderValue1: 'Bearer TOKEN'
       type: prometheus
       url: 'https://thanos-querier.openshift-monitoring.svc.cluster.local:9091'
   name: prometheus-user-workload.yaml
